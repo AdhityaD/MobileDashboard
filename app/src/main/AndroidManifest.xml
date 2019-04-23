@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.ismealdi.hidoc">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+            android:name=".App"
+            android:allowBackup="true"
+            android:fullBackupContent="false"
+            android:hardwareAccelerated="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme"
+            tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="true" />
+        <meta-data android:name="firebase_messaging_auto_init_enabled" android:value="true" />
+        <meta-data android:name="firebase_analytics_collection_enabled" android:value="true" />
+        <meta-data android:name="firebase_performance_collection_enabled" android:value="true" />
+
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_logo" />
+        <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/colorPrimary" />
+        <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="@string/text_default_channel"/>
+        <meta-data android:name="firebase_performance_logcat_enabled" android:value="true" />
+
+        <activity android:name=".view.splash.SplashActivity"
+                  android:screenOrientation="portrait"
+                  android:label="@string/app_name"
+                  android:theme="@style/AppTheme.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".view.user.UserMainActivity"
+                android:label="@string/app_name"
+                android:launchMode="singleTop"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme"/>
+
+        <activity
+                android:name=".view.auth.login.LoginActivity"
+                android:label="@string/app_name"
+                android:launchMode="singleTop"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.Auth"/>
+
+        <activity
+                android:name=".view.auth.signup.SignUpActivity"
+                android:label="@string/app_name"
+                android:parentActivityName=".view.auth.login.LoginActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.Auth"/>
+
+        <activity
+                android:name=".view.auth.forgot.ForgotPasswordActivity"
+                android:label="@string/app_name"
+                android:parentActivityName=".view.auth.login.LoginActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.Auth"/>
+
+    </application>
+
+</manifest>
