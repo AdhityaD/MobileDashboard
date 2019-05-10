@@ -10,12 +10,11 @@ import com.ismealdi.hidoc.utils.interfaces.AmNetworkInterface
  */
 interface ForgotPasswordContract {
     interface View : AmView<Presenter>, AmNetworkInterface {
-        fun showMain()
+        fun clearForm()
     }
 
     interface Presenter : AmPresenter {
-        fun checkSession()
-        fun resetPassword()
+        fun resetPassword(email: String)
     }
 
 

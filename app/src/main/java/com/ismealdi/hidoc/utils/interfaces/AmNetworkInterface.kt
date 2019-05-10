@@ -13,5 +13,7 @@ interface AmNetworkInterface {
     fun onInfo(message: String)
 
     fun onAlert(message: String, actionText: String, actionListener: Runnable)
+
+    fun progress(isShow: Boolean = true)
     
 }

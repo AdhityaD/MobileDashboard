@@ -15,8 +15,8 @@ interface SignUpContract {
 
     interface Presenter : AmPresenter {
         fun checkSession()
-        fun validate(fullName: String, email: String, password: String, phone: String) : Boolean
-        fun signUp(fullName: String, email: String, password: String, phone: String)
+        fun validate(fullName: String, email: String, password: String, phone: String, dateOfBirth: String) : Boolean
+        fun signUp(fullName: String, email: String, password: String, phone: String, dateOfBirth: String)
     }
 
 

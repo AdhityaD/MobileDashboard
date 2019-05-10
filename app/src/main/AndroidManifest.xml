@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -33,8 +36,21 @@
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
         <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_logo" />
         <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/colorPrimary" />
-        <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="@string/text_default_channel"/>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="@string/app_channel"/>
         <meta-data android:name="firebase_performance_logcat_enabled" android:value="true" />
+
+
+        <service android:name=".utils.services.AmMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+
+        <service
+            android:name=".utils.services.AmTaskService"
+            android:enabled="true"
+            android:stopWithTask="false" />
 
         <activity android:name=".view.splash.SplashActivity"
                   android:screenOrientation="portrait"
@@ -63,16 +79,50 @@
         <activity
                 android:name=".view.auth.signup.SignUpActivity"
                 android:label="@string/app_name"
-                android:parentActivityName=".view.auth.login.LoginActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.Auth"/>
 
         <activity
                 android:name=".view.auth.forgot.ForgotPasswordActivity"
                 android:label="@string/app_name"
-                android:parentActivityName=".view.auth.login.LoginActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.Auth"/>
+
+        <activity
+                android:name=".view.user.edit.UserEditActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme"/>
+
+        <activity
+                android:name=".view.user.conversation.ConversationActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme"/>
+
+        <activity
+                android:name=".view.user.article.detail.ArticleDetailActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme"/>
+
+        <activity
+                android:name=".view.user.article.list.ArticleListActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme"/>
+
+        <activity
+                android:name=".view.user.detail.UserDetailActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme"/>
+
+        <activity
+                android:name=".view.user.doctor.list.DoctorListActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme"/>
 
     </application>
 

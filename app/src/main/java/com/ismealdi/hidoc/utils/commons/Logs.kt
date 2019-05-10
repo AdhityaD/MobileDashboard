@@ -49,4 +49,10 @@ object Logs {
             Log.e("AmDatabase", msg)
         }
     }
+
+    fun fireBase(msg: String) {
+        if (BuildConfig.DEBUG) {
+            Log.e("AmFireBase", msg)
+        }
+    }
 }

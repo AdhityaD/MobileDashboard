@@ -1,8 +1,12 @@
 package com.ismealdi.hidoc.utils.commons
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Handler
+import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
@@ -16,6 +20,9 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.ismealdi.hidoc.R
 import com.ismealdi.hidoc.utils.components.AmNoSwipe
+import java.io.ByteArrayOutputStream
+import java.util.*
+
 
 /**
  * Created by Al
@@ -28,7 +35,64 @@ class Utils {
       val radius = context.resources.getDimensionPixelSize(R.dimen.radius)
       var requestOptions = RequestOptions()
 
-      requestOptions = requestOptions.transforms(CenterCrop(), RoundedCorners(radius))
+      requestOptions = requestOptions.transform(CenterCrop(), RoundedCorners(radius))
+      requestOptions = requestOptions.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+
+      if(scaleType == ImageView.ScaleType.CENTER_INSIDE) {
+        requestOptions = requestOptions.centerInside()
+      }
+
+      Glide.with(context)
+        .load(it)
+        .apply(requestOptions)
+        .into(imageView)
+    }
+  }
+
+  fun imageCircle(imageView: ImageView, url: String?, context: Context, scaleType: ImageView.ScaleType? = null) {
+    url?.let {
+      val radius = context.resources.getDimensionPixelSize(R.dimen.radius_circle)
+      var requestOptions = RequestOptions()
+
+      requestOptions = requestOptions.transform(CenterCrop(), RoundedCorners(radius))
+      requestOptions = requestOptions.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+
+      if(scaleType == ImageView.ScaleType.CENTER_INSIDE) {
+        requestOptions = requestOptions.centerInside()
+      }
+
+      Glide.with(context)
+        .load(it)
+        .apply(requestOptions)
+        .into(imageView)
+    }
+  }
+
+  fun imageTopRound(imageView: ImageView, url: String?, context: Context, scaleType: ImageView.ScaleType? = null) {
+    url?.let {
+      val radius = context.resources.getDimensionPixelSize(R.dimen.radius)
+      var requestOptions = RequestOptions()
+
+      val roundTransform = RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.TOP)
+      requestOptions = requestOptions.transform(CenterCrop(), roundTransform)
+      requestOptions = requestOptions.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+
+      if(scaleType == ImageView.ScaleType.CENTER_INSIDE) {
+        requestOptions = requestOptions.centerInside()
+      }
+
+      Glide.with(context)
+        .load(it)
+        .apply(requestOptions)
+        .into(imageView)
+    }
+  }
+
+  fun image(imageView: ImageView, url: String?, context: Context, scaleType: ImageView.ScaleType? = null) {
+    url?.let {
+      var requestOptions = RequestOptions()
+
+      requestOptions = requestOptions.transform(CenterCrop())
       requestOptions = requestOptions.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
 
       if(scaleType == ImageView.ScaleType.CENTER_INSIDE) {
@@ -72,6 +136,35 @@ class Utils {
     Handler().postDelayed({
       mSnackBar.show()
     }, (if(actionText != "") 500 else 0).toLong())
+  }
+
+  fun dayTimeGreeting(context: Context) : String {
+    val cal = Calendar.getInstance()
+
+    cal.time = Date()
+
+    return when (cal.get(Calendar.HOUR_OF_DAY)) {
+      in 12..16 -> context.getString(R.string.text_good_afternoon)
+      in 17..20 -> context.getString(R.string.text_good_evening)
+      in 21..23 -> context.getString(R.string.text_good_night)
+      else -> context.getString(R.string.text_good_morning)
+    }
+
+  }
+
+  fun compressBitmap(bitmap: Bitmap, quality:Int): Bitmap {
+    val stream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream)
+
+    val byteArray = stream.toByteArray()
+    return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+  }
+
+  fun getImageUri(context: Context, inImage: Bitmap): Uri {
+    val bytes = ByteArrayOutputStream()
+    inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+    val path = MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "HiDocFoto", null)
+    return Uri.parse(path)
   }
 
 }

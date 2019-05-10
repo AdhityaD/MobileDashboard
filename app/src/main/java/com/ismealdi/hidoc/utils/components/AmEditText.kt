@@ -48,8 +48,7 @@ class AmEditText : AppCompatEditText {
 		try {
 			val n = attr.indexCount
 			for (i in 0 until n) {
-				val attribute = attr.getIndex(i)
-				when (attribute) {
+				when (val attribute = attr.getIndex(i)) {
 					R.styleable.AmView_am_edit_text_style-> editTextType = attr.getInt(attribute, 0)
 					R.styleable.AmView_am_font_style-> fontStyle = attr.getInt(attribute, 0)
 					R.styleable.AmView_am_font_family-> fontName = attr.getInt(attribute, 0)

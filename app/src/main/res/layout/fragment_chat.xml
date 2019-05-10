@@ -9,16 +9,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
+            android:layout_marginBottom="@dimen/component_extra_big"
             android:clipToPadding="false"
             android:id="@+id/gridSuggestion"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:elevation="0dp"
             android:fadingEdge="none"
             android:paddingLeft="@dimen/activity_horizontal_margin_small"
@@ -28,8 +27,6 @@
             android:layout_height="wrap_content"/>
 
         <android.support.constraint.ConstraintLayout
-            android:layout_marginTop="@dimen/component_extra_big"
-            app:layout_constraintTop_toBottomOf="@id/gridSuggestion"
             android:id="@+id/layoutRecent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,6 +59,6 @@
 
         </android.support.constraint.ConstraintLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

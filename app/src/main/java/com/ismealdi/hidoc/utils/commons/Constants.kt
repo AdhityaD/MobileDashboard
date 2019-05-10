@@ -20,6 +20,15 @@ object Constants {
         object ACTIVITY {
             const val FROM_SIGNIN = "intentActivityFromLogin"
             const val FROM_SIGNUP = "intentActivityFromSignUp"
+            const val FIRST_LOGIN = "intentLoginFirstLogin"
+            const val USER = "intentUser"
+            const val ARTICLE = "intentArticle"
+            const val FAV = "intentFav"
+        }
+
+        object REQUEST {
+            const val PERMISSION = 10
+            const val IMAGE_PICKER = 11
         }
     }
 
@@ -33,6 +42,15 @@ object Constants {
         const val userUid = "SHARED_UID"
     }
 
+    object USER {
+        const val DOCTOR = 1
+        const val PATIENT = 2
+        const val ADMIN = 3
+    }
+
+    object PATH {
+        const val PROFILE_PHOTO = "profiles/"
+    }
 
     object FRAGMENT {
 

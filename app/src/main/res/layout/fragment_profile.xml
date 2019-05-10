@@ -27,6 +27,7 @@
             tools:ignore="RtlSymmetry">
 
             <ImageView
+                android:contentDescription="@string/text_profile_picture"
                 android:id="@+id/imageProfilePicture"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -47,7 +48,7 @@
                     android:id="@+id/labelName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Aldi Maulana"
+                    android:text="@string/text_dash"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="@dimen/text_medium"
                     android:layout_marginEnd="@dimen/component_medium"
@@ -56,19 +57,19 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.ismealdi.hidoc.utils.components.AmTextView
-                    android:id="@+id/labelLocation"
+                    android:id="@+id/labelPhone"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="@dimen/text_small"
                     app:layout_constraintTop_toBottomOf="@id/labelName"
                     app:layout_constraintLeft_toLeftOf="@id/labelName"
                     app:layout_constraintRight_toRightOf="@id/labelName"
-                    android:text="Bogor, Indonesia"
+                    android:text="@string/text_dash"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
 
                 <RatingBar
                     android:layout_marginTop="@dimen/component_normal"
-                    app:layout_constraintTop_toBottomOf="@id/labelLocation"
+                    app:layout_constraintTop_toBottomOf="@id/labelPhone"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginEnd="30dp"
                     android:id="@+id/ratingBar"
@@ -145,20 +146,6 @@
                 android:orientation="vertical">
 
                 <com.ismealdi.hidoc.utils.components.AmTextView
-                    android:textColor="@color/colorTextSecondary"
-                    android:textSize="@dimen/text_small"
-                    android:text="@string/text_unique_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <com.ismealdi.hidoc.utils.components.AmTextView
-                    app:am_font_style="medium"
-                    android:textColor="@color/colorTextPrimary"
-                    android:text="919182828182"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <com.ismealdi.hidoc.utils.components.AmTextView
                     android:layout_marginTop="@dimen/component_medium"
                     android:textColor="@color/colorTextSecondary"
                     android:textSize="@dimen/text_small"
@@ -168,8 +155,9 @@
 
                 <com.ismealdi.hidoc.utils.components.AmTextView
                     app:am_font_style="medium"
+                    android:id="@+id/labelEmail"
                     android:textColor="@color/colorTextPrimary"
-                    android:text="iammaulana.aldi@gmail.com"
+                    android:text="@string/text_dash"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -183,8 +171,9 @@
 
                 <com.ismealdi.hidoc.utils.components.AmTextView
                     app:am_font_style="medium"
+                    android:id="@+id/labelBloodType"
                     android:textColor="@color/colorTextPrimary"
-                    android:text="B"
+                    android:text="@string/text_dash"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -199,7 +188,8 @@
                 <com.ismealdi.hidoc.utils.components.AmTextView
                     app:am_font_style="medium"
                     android:textColor="@color/colorTextPrimary"
-                    android:text="20-24"
+                    android:id="@+id/labelAgeRange"
+                    android:text="@string/text_dash"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -213,8 +203,9 @@
 
                 <com.ismealdi.hidoc.utils.components.AmTextView
                     app:am_font_style="medium"
+                    android:id="@+id/labelSex"
                     android:textColor="@color/colorTextPrimary"
-                    android:text="Male"
+                    android:text="@string/text_dash"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -228,8 +219,9 @@
 
                 <com.ismealdi.hidoc.utils.components.AmTextView
                     app:am_font_style="medium"
+                    android:id="@+id/labelHistory"
                     android:textColor="@color/colorTextPrimary"
-                    android:text="Asma, Gangguan Saraf Tangan, Tenggorokan, Mata, Jiwa"
+                    android:text="@string/text_dash"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -238,6 +230,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
+            android:baselineAligned="false"
             style="@style/AppTheme.Layout.Horizontal"
             android:layout_marginTop="@dimen/component_extra"
             app:layout_constraintTop_toBottomOf="@id/layoutUserInformation"
@@ -264,7 +257,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_checkups"/>
+                    app:srcCompat="@drawable/ic_checkups"
+                    android:contentDescription="@string/text_check_up" />
 
                 <com.ismealdi.hidoc.utils.components.AmTextView
                     android:layout_marginStart="@dimen/component_medium"
@@ -286,7 +280,7 @@
                     app:am_font_style="medium"
                     android:textColor="@color/colorTextPrimary"
                     android:lines="1"
-                    android:text="20"
+                    android:text="@string/text_dash"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
 
@@ -309,6 +303,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/text_medicine"
                     app:srcCompat="@drawable/ic_medicine"/>
 
                 <com.ismealdi.hidoc.utils.components.AmTextView
@@ -331,7 +326,7 @@
                     app:am_font_style="medium"
                     android:textColor="@color/colorTextPrimary"
                     android:lines="1"
-                    android:text="3x1"
+                    android:text="@string/text_dash"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
 

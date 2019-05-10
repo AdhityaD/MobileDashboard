@@ -60,7 +60,7 @@
                     app:layout_constraintTop_toBottomOf="@id/labelWelcome"
                     app:layout_constraintLeft_toLeftOf="@id/labelWelcome"
                     app:layout_constraintRight_toRightOf="@id/labelWelcome"
-                    android:text="Aldi Maulana"
+                    android:text="@string/text_dash"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
             </android.support.constraint.ConstraintLayout>

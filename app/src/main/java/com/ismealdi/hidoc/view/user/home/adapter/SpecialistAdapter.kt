@@ -12,7 +12,7 @@ import com.ismealdi.hidoc.utils.components.AmButton
 import com.ismealdi.hidoc.utils.components.AmTextView
 import kotlinx.android.synthetic.main.item_specialist.view.*
 
-class SpecialistAdapter(private var data: List<String>, private val context: Context, private val isMore: Boolean = false) : RecyclerView.Adapter<SpecialistAdapter.ViewHolder>() {
+class SpecialistAdapter(private var data: MutableList<String>, private val context: Context, private val isMore: Boolean = false) : RecyclerView.Adapter<SpecialistAdapter.ViewHolder>() {
 	
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		val button: AmButton = itemView.buttonSpecialist
@@ -39,5 +39,12 @@ class SpecialistAdapter(private var data: List<String>, private val context: Con
 	
 	override fun getItemCount(): Int {
 		return data.size
+	}
+
+	fun update(list: List<String>) {
+		data.clear()
+		data.addAll(list)
+
+		this.notifyDataSetChanged()
 	}
 }

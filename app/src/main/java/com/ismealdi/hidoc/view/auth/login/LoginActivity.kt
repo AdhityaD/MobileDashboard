@@ -32,7 +32,14 @@ class LoginActivity: AmActivity(R.layout.activity_sign_in), LoginContract.View {
 		}
 		
 		buttonLogIn.setOnClickListener {
-			showMain()
+			presenter?.let {
+				val email = inputEmailAddress.text.toString()
+				val password = inputPassword.text.toString()
+
+				if(it.validate(email, password)) {
+					it.signIn(email, password)
+				}
+			}
 		}
 	}
 
@@ -45,13 +52,11 @@ class LoginActivity: AmActivity(R.layout.activity_sign_in), LoginContract.View {
 	
 	private fun showSignUp() {
 		val intent = Intent(this, SignUpActivity::class.java)
-
 		startActivity(intent)
 	}
 	
 	private fun showForgotPassword() {
 		val intent = Intent(this, ForgotPasswordActivity::class.java)
-
 		startActivity(intent)
 	}
 

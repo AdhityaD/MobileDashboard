@@ -8,9 +8,26 @@ import com.google.firebase.Timestamp
  */
 class Chat(
 		var uid: String = "",
-		var senderId: String = "",
-		var receiverId: String = "",
-        var sender: User = User(),
-		var conversations: List<Conversation> = listOf(),
-		var lastUpdated: Timestamp = Timestamp.now()
-)
+		var owner: String = "",
+		var friend: String = "",
+		var lastMessage: String = "",
+		var lastSendOn: Timestamp = Timestamp.now(),
+		var isReaded: Boolean = false,
+		var createdOn: Timestamp = Timestamp.now()
+) {
+
+	companion object {
+		const val tableName = "chats"
+
+		object Fields {
+			const val uid = "uid"
+			const val owner = "owner"
+			const val friend = "friend"
+			const val lastMessage = "lastMessage"
+			const val lastSendOn = "lastSendOn"
+			const val isReaded = "isReaded"
+			const val createdOn = "createdOn"
+		}
+	}
+
+}

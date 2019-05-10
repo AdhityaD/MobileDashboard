@@ -16,7 +16,8 @@ interface LoginContract {
 	
 	interface Presenter : AmPresenter {
 		fun checkSession()
-		fun signIn()
+		fun validate(email: String, password: String) : Boolean
+		fun signIn(email: String, password: String)
 	}
 	
 }

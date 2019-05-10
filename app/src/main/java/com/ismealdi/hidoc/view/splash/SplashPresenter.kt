@@ -1,6 +1,7 @@
 package com.ismealdi.hidoc.view.splash
 
 import android.content.Context
+import com.ismealdi.hidoc.App
 
 /**
  * Created by Al
@@ -13,7 +14,11 @@ class SplashPresenter(private val view: SplashContract.View, private val context
 	}
 	
 	override fun checkSession() {
-		view.showMain()
+		App.amAuth.currentUser?.let {
+			view.showMain()
+		} ?: run {
+			view.showSignIn()
+		}
 	}
 	
 }

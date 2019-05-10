@@ -1,6 +1,7 @@
 package com.ismealdi.hidoc.view.user.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Handler
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -8,13 +9,24 @@ import android.widget.LinearLayout
 import com.ismealdi.hidoc.R
 import com.ismealdi.hidoc.base.AmFragment
 import com.ismealdi.hidoc.struct.Article
+import com.ismealdi.hidoc.struct.Favorite
 import com.ismealdi.hidoc.struct.User
+import com.ismealdi.hidoc.utils.commons.Constants.INTENT.ACTIVITY.ARTICLE
+import com.ismealdi.hidoc.utils.commons.Constants.INTENT.ACTIVITY.USER
+import com.ismealdi.hidoc.utils.commons.Utils
 import com.ismealdi.hidoc.utils.components.slider.AmImage
 import com.ismealdi.hidoc.utils.components.slider.AmSliderAdapter
 import com.ismealdi.hidoc.utils.components.slider.AmSliderTransformation
-import com.ismealdi.hidoc.view.user.home.adapter.ArticleAdapter
-import com.ismealdi.hidoc.view.user.home.adapter.DoctorAdapter
+import com.ismealdi.hidoc.view.user.article.detail.ArticleDetailActivity
+import com.ismealdi.hidoc.view.user.article.list.ArticleListActivity
+import com.ismealdi.hidoc.view.user.conversation.ConversationActivity
+import com.ismealdi.hidoc.view.user.detail.UserDetailActivity
+import com.ismealdi.hidoc.view.user.doctor.list.DoctorListActivity
 import com.ismealdi.hidoc.view.user.home.adapter.SpecialistAdapter
+import com.ismealdi.hidoc.view.user.home.adapter.article.ArticleAdapter
+import com.ismealdi.hidoc.view.user.home.adapter.article.ArticleAdapterInterface
+import com.ismealdi.hidoc.view.user.home.adapter.doctor.DoctorAdapter
+import com.ismealdi.hidoc.view.user.home.adapter.doctor.DoctorAdapterInterface
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
@@ -22,7 +34,8 @@ import java.util.*
  * Created by Al
  * on 06/04/19 | 03:27
  */
-class HomeFragment : AmFragment(R.layout.fragment_home, R.string.title_home), HomeContract.View {
+class HomeFragment : AmFragment(R.layout.fragment_home, R.string.title_home), HomeContract.View, DoctorAdapterInterface,
+	ArticleAdapterInterface {
 	
 	override var presenter: HomeContract.Presenter? = null
 	
@@ -33,25 +46,52 @@ class HomeFragment : AmFragment(R.layout.fragment_home, R.string.title_home), Ho
 	private var specialistsAdapter: SpecialistAdapter? = null
 	private var doctorsAdapter: DoctorAdapter? = null
 	private var articlesAdapter: ArticleAdapter? = null
-	
+
+	private var favorites: HashSet<String> = hashSetOf()
+
 	override fun initView() {
-		
 		amActivity?.let {
 			presenter = HomePresenter(this, it)
+
 			initAdapter(it)
-			initSlider(it)
 			initLists(it)
+
+			presenter?.user()
+			presenter?.sliders()
+			presenter?.specialists()
+			presenter?.articles()
+
+			labelWelcome?.text = Utils().dayTimeGreeting(it)
+
 		}
 	}
 
     private fun initAdapter(context: Context) {
-        specialistsAdapter = SpecialistAdapter(
-                listOf("Dentist", "Internist", "Neurologist", "Orthopedic", "ENT", "Anesthesia", "Dermatologist", "Geriatric", "Hematologist", "Radiologist"),
-                context, isMore= true)
+        specialistsAdapter = SpecialistAdapter(mutableListOf(), context, isMore= true)
 
-        doctorsAdapter = DoctorAdapter(listOf(User(), User(), User()), context)
-        articlesAdapter = ArticleAdapter(listOf(Article(), Article(), Article(), Article()), context)
+        doctorsAdapter = DoctorAdapter(mutableListOf(), favorites, context, this)
+        articlesAdapter = ArticleAdapter(mutableListOf(), context, this)
     }
+
+	override fun initListener() {
+		super.initListener()
+
+		buttonSeeAllArticles.setOnClickListener {
+			activity?.let {
+				val intent = Intent(it, ArticleListActivity::class.java)
+
+				startActivity(intent)
+			}
+		}
+
+		buttonSeeAllDoctor.setOnClickListener {
+			activity?.let {
+				val intent = Intent(it, DoctorListActivity::class.java)
+
+				startActivity(intent)
+			}
+		}
+	}
 
     private fun initLists(context: Context) {
 		gridSpecialists.layoutManager = GridLayoutManager(context, 5)
@@ -63,16 +103,39 @@ class HomeFragment : AmFragment(R.layout.fragment_home, R.string.title_home), Ho
 		gridArticles.layoutManager = LinearLayoutManager(context, LinearLayout.HORIZONTAL, false)
 		gridArticles.adapter = articlesAdapter
 	}
-	
-	private fun initSlider(context: Context) {
-		val slideList = listOf(
-			AmImage("https://d1bpj0tv6vfxyp.cloudfront.net/slider/20190301132637.3381657571667.jpg", title= "Get Up To 20% Off", subTitle= "Medical Checkups"),
-			AmImage("https://d1bpj0tv6vfxyp.cloudfront.net/slider/20190206100027.128-1294346682.jpg", title= "Merdeka Days 25% Off", subTitle= "Medical Checkups")
-		)
-		
+
+	override fun displayUser(user: User) {
+		with(user) {
+			labelName?.text = if(fullName.contains(" ")) fullName.split(" ")[0] else fullName
+
+			activity?.let { context ->
+				imageProfilePicture?.let { Utils().imageCircle(it, photoUrl, context) }
+			}
+		}
+	}
+
+	override fun displayDoctors(doctors: List<User>) {
+		doctorsAdapter?.update(doctors)
+	}
+
+	override fun displaySpecialists(lists: List<String>) {
+		specialistsAdapter?.update(lists)
+
+		presenter?.favorites()
+	}
+
+	override fun displayArticles(articles: List<Article>) {
+		articlesAdapter?.update(articles)
+	}
+
+	override fun displaySlider(images: List<AmImage>) {
+		amActivity?.applicationContext?.let { initSlider(it, images) }
+	}
+
+	private fun initSlider(context: Context, slideList: List<AmImage>) {
 		sliderNumberPage = slideList.size
 		
-		slider.adapter = AmSliderAdapter(context, slideList)
+		slider.adapter = AmSliderAdapter(context, slideList, this)
 		sliderIndicator.setupWithViewPager(slider)
 		slider.setPageTransformer(true, AmSliderTransformation())
 		
@@ -91,6 +154,45 @@ class HomeFragment : AmFragment(R.layout.fragment_home, R.string.title_home), Ho
 				handler.post(update)
 			}
 		}, sliderDelay, sliderDelay)
+	}
+
+	override fun onPlusClick(position: Int, user: User) {
+		 presenter?.add(position, user)
+	}
+
+	override fun onItemClick(position: Int, article: Article) {
+		activity?.let {
+			val intent = Intent(it, ArticleDetailActivity::class.java)
+			intent.putExtra(ARTICLE, article)
+			startActivity(intent)
+		}
+	}
+
+	override fun onChatClick(position: Int, user: User) {
+		activity?.let {
+			val intent = Intent(it, ConversationActivity::class.java)
+			intent.putExtra(USER, user)
+			startActivity(intent)
+		}
+	}
+
+	override fun refreshDoctor(position: Int) {
+		doctorsAdapter?.refresh(position, favorites)
+	}
+
+	override fun displayFavorites(favorite: List<Favorite>) {
+		favorites.clear()
+		favorite.forEach {
+			favorites.add(it.friend)
+		}
+	}
+
+	override fun onDoctorClick(user: User) {
+		activity?.let {
+			val intent = Intent(it, UserDetailActivity::class.java)
+			intent.putExtra(USER, user)
+			startActivity(intent)
+		}
 	}
 	
 }

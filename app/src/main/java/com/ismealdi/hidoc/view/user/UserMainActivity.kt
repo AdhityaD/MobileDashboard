@@ -1,5 +1,6 @@
 package com.ismealdi.hidoc.view.user
 
+import android.content.Intent
 import android.support.annotation.MenuRes
 import android.support.design.widget.BottomNavigationView
 import android.view.Gravity
@@ -10,7 +11,9 @@ import com.ismealdi.hidoc.base.AmActivity
 import com.ismealdi.hidoc.base.AmFragment
 import com.ismealdi.hidoc.utils.commons.Constants
 import com.ismealdi.hidoc.utils.extensions.selectedListener
+import com.ismealdi.hidoc.utils.services.AmMessagingService
 import com.ismealdi.hidoc.view.user.chat.ChatFragment
+import com.ismealdi.hidoc.view.user.doctor.list.DoctorListActivity
 import com.ismealdi.hidoc.view.user.home.HomeFragment
 import com.ismealdi.hidoc.view.user.profile.ProfileFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -114,5 +117,23 @@ class UserMainActivity : AmActivity(R.layout.activity_main), BottomNavigationVie
 		fragmentManager.beginTransaction().add(R.id.frameLayout, home, Constants.FRAGMENT.HOME.NAME).commit()
 		
 		componentBottomMenu.selectedItemId = R.id.home
+	}
+
+	override fun onBackPressed() {
+		AmMessagingService().storeOnline(false)
+		super.onBackPressed()
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+		if (item?.itemId == R.id.love) {
+
+			val intent = Intent(this, DoctorListActivity::class.java)
+			intent.putExtra(Constants.INTENT.ACTIVITY.FAV, true)
+			startActivity(intent)
+
+		}
+
+		return true
 	}
 }

@@ -11,8 +11,9 @@ interface SplashContract {
 	
 	interface View : AmView<Presenter> {
 		fun showMain()
+		fun showSignIn()
 	}
-	
+
 	interface Presenter : AmPresenter {
 		fun checkSession()
 	}

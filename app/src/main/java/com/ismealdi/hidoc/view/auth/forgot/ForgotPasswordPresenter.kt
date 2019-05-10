@@ -1,6 +1,8 @@
 package com.ismealdi.hidoc.view.auth.forgot
 
 import android.content.Context
+import com.ismealdi.hidoc.App
+import com.ismealdi.hidoc.R
 
 /**
  * Created by Al
@@ -14,12 +16,19 @@ class ForgotPasswordPresenter(private val view: ForgotPasswordContract.View, pri
         view.presenter = this
     }
 
-    override fun checkSession() {
-        view.showMain()
-    }
+    override fun resetPassword(email: String) {
+        if (email.isEmpty()) {
+            view.onError(context.getString(R.string.validation_email_reset))
+        }else{
+            view.progress(true)
+            App.amAuth.sendPasswordResetEmail(email).addOnSuccessListener {
+                view.onInfo(String.format(context.getString(R.string.info_email_reset), email))
+            }.addOnFailureListener {
+                view.onError(it.localizedMessage.toString())
+            }
 
-    override fun resetPassword() {
-        view.onError("Apalah apalah")
+            view.clearForm()
+        }
     }
 
 }

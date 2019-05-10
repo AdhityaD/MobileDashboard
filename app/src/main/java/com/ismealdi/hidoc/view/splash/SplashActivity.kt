@@ -5,7 +5,10 @@ import android.content.Intent
 import android.view.animation.AnimationUtils
 import com.ismealdi.hidoc.R
 import com.ismealdi.hidoc.base.AmActivity
+import com.ismealdi.hidoc.utils.services.AmMessagingService
+import com.ismealdi.hidoc.utils.services.AmTaskService
 import com.ismealdi.hidoc.view.auth.login.LoginActivity
+import com.ismealdi.hidoc.view.user.UserMainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -60,8 +63,19 @@ class SplashActivity: AmActivity(R.layout.activity_splash), SplashContract.View 
 	}
 	
 	override fun showMain() {
+		val intent = Intent(this, UserMainActivity::class.java)
+
+		startService(Intent(baseContext, AmTaskService::class.java))
+
+		AmMessagingService().storeOnline(true)
+
+		startActivity(intent)
+		finish()
+	}
+
+	override fun showSignIn() {
 		val intent = Intent(this, LoginActivity::class.java)
-		
+
 		startActivity(intent)
 		finish()
 	}

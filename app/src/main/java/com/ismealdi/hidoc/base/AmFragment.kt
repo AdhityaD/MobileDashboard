@@ -84,4 +84,10 @@ abstract class AmFragment(@LayoutRes var layout: Int, @StringRes var titleDefaul
 		}
 	}
 
+	override fun progress(isShow: Boolean) {
+		amActivity?.let { activity ->
+			activity.progress(isShow)
+		}
+	}
+
 }

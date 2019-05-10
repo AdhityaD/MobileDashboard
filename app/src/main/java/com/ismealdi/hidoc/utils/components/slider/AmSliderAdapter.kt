@@ -8,19 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.ismealdi.hidoc.R
+import com.ismealdi.hidoc.struct.Article
 import com.ismealdi.hidoc.utils.commons.Utils
+import com.ismealdi.hidoc.view.user.home.adapter.article.ArticleAdapterInterface
 import kotlinx.android.synthetic.main.component_slider.view.*
 
 /**
  * Created by Al
  * on 06/04/19 | 22:21
  */
-class AmSliderAdapter(private val context: Context, private val imageModelArrayList: List<AmImage>) : PagerAdapter() {
+class AmSliderAdapter(private val context: Context, private val imageModelArrayList: List<AmImage>, private val listener: ArticleAdapterInterface) : PagerAdapter() {
 	
 	private val inflater: LayoutInflater = LayoutInflater.from(context)
 	
-	override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-		container.removeView(`object` as View)
+	override fun destroyItem(container: ViewGroup, position: Int, view: Any) {
+		container.removeView(view as View)
 	}
 	
 	override fun getCount(): Int {
@@ -37,6 +39,11 @@ class AmSliderAdapter(private val context: Context, private val imageModelArrayL
 		imageLayout.labelSubTitle.text = data.subTitle
 		
 		view.addView(imageLayout, 0)
+
+		imageLayout.setOnClickListener {
+			val article = Article(data.title, data.image, context.getString(R.string.app_name), data.subTitle)
+			listener.onItemClick(position, article)
+		}
 		
 		return imageLayout
 	}

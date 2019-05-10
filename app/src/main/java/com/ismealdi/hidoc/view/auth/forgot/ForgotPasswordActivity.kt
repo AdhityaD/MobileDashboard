@@ -1,8 +1,8 @@
 package com.ismealdi.hidoc.view.auth.forgot
 
-import android.view.Gravity
 import com.ismealdi.hidoc.R
 import com.ismealdi.hidoc.base.AmActivity
+import kotlinx.android.synthetic.main.activity_forgot_password.*
 
 /**
  * Created by Al
@@ -15,10 +15,17 @@ class ForgotPasswordActivity: AmActivity(R.layout.activity_forgot_password), For
     
     override fun initView() {
         initToolbar(pageName = getString(R.string.title_forgot_password), back = true)
-        setTitleGravity(Gravity.CENTER)
     }
 
-    override fun showMain() {
-        
+    override fun initListener() {
+        super.initListener()
+
+        buttonReset.setOnClickListener {
+            presenter?.resetPassword(inputEmailAddress.text.toString())
+        }
+    }
+
+    override fun clearForm() {
+        inputEmailAddress.setText("")
     }
 }
