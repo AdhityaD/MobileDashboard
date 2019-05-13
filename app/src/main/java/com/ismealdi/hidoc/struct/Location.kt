@@ -7,7 +7,8 @@ import com.google.firebase.firestore.GeoPoint
  * Created by Al
  * on 07/04/19 | 01:29
  */
-class Location(
+class
+Location(
 	var location: GeoPoint = GeoPoint(0.0,0.0),
 	var uid: String = "",
 	var createdOn: Timestamp = Timestamp.now()

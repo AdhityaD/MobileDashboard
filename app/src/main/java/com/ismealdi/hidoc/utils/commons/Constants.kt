@@ -24,11 +24,13 @@ object Constants {
             const val USER = "intentUser"
             const val ARTICLE = "intentArticle"
             const val FAV = "intentFav"
+            const val BARCODE = "Barcode"
         }
 
         object REQUEST {
             const val PERMISSION = 10
             const val IMAGE_PICKER = 11
+            const val RC_HANDLE_GMS = 9001
         }
     }
 

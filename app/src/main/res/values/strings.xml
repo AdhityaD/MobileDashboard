@@ -82,5 +82,6 @@
     <string name="text_favorite">Favorite</string>
     <string name="text_doctor">Doctor</string>
     <string name="title_doctors">Doctors</string>
+    <string name="text_arahkan">Arahkan ke barcode</string>
 
 </resources>

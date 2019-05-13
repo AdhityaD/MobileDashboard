@@ -16,6 +16,7 @@ import com.ismealdi.hidoc.view.user.chat.ChatFragment
 import com.ismealdi.hidoc.view.user.doctor.list.DoctorListActivity
 import com.ismealdi.hidoc.view.user.home.HomeFragment
 import com.ismealdi.hidoc.view.user.profile.ProfileFragment
+import com.ismealdi.hidoc.view.user.scanner.ScannerActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.component_toolbar.*
 
@@ -126,12 +127,22 @@ class UserMainActivity : AmActivity(R.layout.activity_main), BottomNavigationVie
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-		if (item?.itemId == R.id.love) {
+		when (item?.itemId) {
+			R.id.love -> {
 
-			val intent = Intent(this, DoctorListActivity::class.java)
-			intent.putExtra(Constants.INTENT.ACTIVITY.FAV, true)
-			startActivity(intent)
+				val intent = Intent(this, DoctorListActivity::class.java)
+				intent.putExtra(Constants.INTENT.ACTIVITY.FAV, true)
+				startActivity(intent)
 
+			}
+
+			android.R.id.home -> {
+
+				val intent = Intent(this, ScannerActivity::class.java)
+				intent.putExtra(Constants.INTENT.ACTIVITY.FAV, true)
+				startActivity(intent)
+
+			}
 		}
 
 		return true
